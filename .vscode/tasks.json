@@ -25,7 +25,7 @@
         {
             "type": "shell",
             "label": "xilinx-arm",
-            //"command": "H:/ToolChain-Xilinx/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gcc",
+            //"command": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gcc",
             "command": "arm-linux-gnueabihf-gcc",
             "args": [
 				"-fdiagnostics-color=always",
@@ -37,8 +37,8 @@
             "options": {
 				"cwd": "${fileDirname}",
 				"env": {
-					"CROSS_TOOL": "H:/ToolChain-Xilinx/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin", 
-					"PATH": "$PATH;H:/ToolChain-Xilinx/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin",
+					"CROSS_TOOL": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin", 
+					"PATH": "$PATH;X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin",
 				}
             },
             "group": "build",
@@ -60,8 +60,8 @@
             "options": {
 				"cwd": "${fileDirname}",
 				"env": {
-					//"CROSS_TOOL": "H:/ToolChain-Xilinx/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin", 
-					"PATH": "$PATH;H:/ToolChain-Xilinx/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin",
+					//"CROSS_TOOL": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin", 
+					"PATH": "$PATH;X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin",
 				}
             },
             "group": "build",
@@ -77,9 +77,9 @@
             "options": {
 				"cwd": "${fileDirname}",
                 "env": {
-                    "CROSS_TOOL": "H:/ToolChain-Xilinx/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin", 
-                    "MAKE_PATH": "H:/ToolChain-Xilinx/vivado2018.3/gnuwin/bin", 
-					"Path": "H:/ToolChain-Xilinx/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin;H:/ToolChain-Xilinx/vivado2018.3/gnuwin/bin;",
+                    "CROSS_TOOL": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin", 
+                    "MAKE_PATH": "X:/Xilinx-ToolChain/vivado2018.3/gnuwin/bin", 
+					"Path": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin;X:/Xilinx-ToolChain/vivado2018.3/gnuwin/bin;",
 				},
                 /*"shell": {
                     "executable": "C:/Program Files/Git/git-bash.exe",

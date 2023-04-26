@@ -34,7 +34,7 @@ int main(int argc,char** argv)
     for(int i = 0x0;i < 5;++i)
     {
         fprintf(stderr,"log index:%d\n",i);
-        usleep(500000);
+        usleep(100000);
     }
 
 
@@ -65,6 +65,23 @@ int main(int argc,char** argv)
     }
 
 
+    int temp_loop = 0x1;
+    int64_t temp_loop_index = 0x0;
+    while(1)
+    {
+        if(!temp_loop){
+            DLog("exit loop");
+            break;
+        }
+        //
+        temp_loop_index++;
+        DTLog(5000,"curent index:%d",temp_loop_index);
+        //lib func
+
+    }
+
+
+    DLog("exit test demo");
     ReleaseLog();
 
     //

@@ -3,8 +3,8 @@
 #
 
 .PHONY: all
-#all: clean libLogOp.so
-all: libLogOp.so
+all: clean libLogOp.so
+#all: libLogOp.so
 
 
 user_obj += LogLib.o

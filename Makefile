@@ -33,7 +33,7 @@ subinclude:
 # endif
 
 
-pj_target := appDemo
+#pj_target := appDemo
 pj_target += appAttach
 
 
@@ -43,6 +43,7 @@ pj_target += appAttach
 .PHONY: target
 target: clean $(foreach target,$(pj_target),$(target))
 $(pj_target):$(pj_target).o
+#$(foreach target,$(pj_target),$(target)):$@.o
 	-$(RM) $@
 	$(CC) $(pj_LDFLAGS) $(LD_LIB_PATH) $(foreach dir,$(pj_subdirs),-L$(shell pwd)\$(dir)) -o $@ $^
 

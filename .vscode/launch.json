@@ -9,14 +9,14 @@
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [
-                {"name": "PATH", "value": "$PATH;H:/ToolChain-Xilinx/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin;"},
-                {"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/LogLib"},
+                {"name": "PATH", "value": "$PATH;X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin;"},
+                //{"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/LogLib"},
             ],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "H:/ToolChain-Xilinx/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb.exe",
+            "miDebuggerPath": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb.exe",
             //"miDebuggerPath": "arm-linux-gnueabihf-gdb.exe",
-            "miDebuggerServerAddress": "192.168.1.99:2333",
+            "miDebuggerServerAddress": "192.168.1.233:2333",
             "setupCommands": [
                 {
                     "description": "为 gdb 启用整齐打印",
@@ -41,7 +41,7 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "H:/ToolChain-Xilinx/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb",
+            "miDebuggerPath": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb",
             "miDebuggerServerAddress": "192.168.1.99:2333",
             "setupCommands": [
                 {
