@@ -75,7 +75,7 @@ int main(int argc,char** argv)
         }
         //
         temp_loop_index++;
-        DTLog(5000,"curent index:%d",temp_loop_index);
+        DTLog(500,"curent index:%lld",temp_loop_index);
         //lib func
 
     }

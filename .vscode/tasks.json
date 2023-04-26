@@ -20,11 +20,12 @@
                 "reveal": "silent"
             },
             // Use the standard MS compiler pattern to detect errors, warnings and infos
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "detail": "默认生成的编译任务，编译器为msvc"
         },
         {
             "type": "shell",
-            "label": "xilinx-arm",
+            "label": "xilinx-binary",
             //"command": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gcc",
             "command": "arm-linux-gnueabihf-gcc",
             "args": [
@@ -37,22 +38,24 @@
             "options": {
 				"cwd": "${fileDirname}",
 				"env": {
-					"CROSS_TOOL": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin", 
+					//"CROSS_TOOL": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin", 
 					"PATH": "$PATH;X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin",
 				}
             },
             "group": "build",
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$gcc",
+            "detail": "使用xilinx交叉编译工具，编译可执行文件的任务"
         },
         {
             "type": "shell",
-            "label": "xilinx-arm-shareLib",
+            "label": "xilinx-sharelib",
             "command": "arm-linux-gnueabihf-gcc",
             "args": [
 				"-fdiagnostics-color=always",
 				"-g",
                 "-shared",
                 "-fpic",
+                "-fpermissive",
 				"${file}",
 				"-o",
 				"${fileDirname}/${fileBasenameNoExtension}.so"
@@ -65,11 +68,12 @@
 				}
             },
             "group": "build",
-            "problemMatcher": "$gcc"
+            "problemMatcher": "$gcc",
+            "detail": "使用xilinx交叉编译工具，编译动态库文件的任务"
         },
         {
             "type": "shell",
-            "label": "xilinx-arm-make",
+            "label": "make-xilinx",
             "command": "make",
             "args": [
                 "all"
@@ -81,14 +85,17 @@
                     "MAKE_PATH": "X:/Xilinx-ToolChain/vivado2018.3/gnuwin/bin", 
 					"Path": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin;X:/Xilinx-ToolChain/vivado2018.3/gnuwin/bin;",
 				},
-                /*"shell": {
+                /*
+                "shell": {
                     "executable": "C:/Program Files/Git/git-bash.exe",
                     "args": [
 
                     ]
-                }*/
+                }
+                */
             },
             "group": "build",
+            "detail": "使用make方式进行编译的任务，需要先写好makefile文件才可以使用此种方式"
         }
     ]
 }
