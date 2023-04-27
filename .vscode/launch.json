@@ -61,7 +61,7 @@
             "type": "cppdbg",
             "request": "attach",
             //需要调试的程序的完整路径
-            "program": "${workspaceFolder}/appAttach",
+            "program": "${workspaceFolder}/demo-appAttach/appAttach",
             "MIMode": "gdb",
             "miDebuggerPath": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb.exe",
             //

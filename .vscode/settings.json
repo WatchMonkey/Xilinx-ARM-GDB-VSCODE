@@ -1,0 +1,14 @@
+{
+    "terminal.integrated.defaultProfile.osx": "",
+    "terminal.integrated.profiles.windows": {
+        "cygwin-Bash": {
+            "path": "G:\\F\\cygwin64\\bin\\bash.exe",
+            "args": [
+                "--login",
+                "-i"
+            ],
+            "icon": "terminal-bash"
+        },
+    },
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+}

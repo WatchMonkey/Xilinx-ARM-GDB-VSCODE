@@ -73,10 +73,62 @@
         },
         {
             "type": "shell",
-            "label": "make-xilinx",
+            "label": "make-xilinx release版本",
             "command": "make",
             "args": [
                 "all"
+            ],
+            "options": {
+				"cwd": "${fileDirname}",
+                "env": {
+                    "CROSS_TOOL": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin", 
+                    "MAKE_PATH": "X:/Xilinx-ToolChain/vivado2018.3/gnuwin/bin", 
+					"Path": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin;X:/Xilinx-ToolChain/vivado2018.3/gnuwin/bin;",
+				},
+                /*
+                "shell": {
+                    "executable": "C:/Program Files/Git/git-bash.exe",
+                    "args": [
+
+                    ]
+                }
+                */
+            },
+            "group": "build",
+            "detail": "使用make方式进行编译的任务，需要先写好makefile文件才可以使用此种方式"
+        },
+        {
+            "type": "shell",
+            "label": "make-xilinx debug版本",
+            "command": "make",
+            "args": [
+                "DEBUG=1"
+            ],
+            "options": {
+				"cwd": "${fileDirname}",
+                "env": {
+                    "CROSS_TOOL": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin", 
+                    "MAKE_PATH": "X:/Xilinx-ToolChain/vivado2018.3/gnuwin/bin", 
+					"Path": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin;X:/Xilinx-ToolChain/vivado2018.3/gnuwin/bin;",
+				},
+                /*
+                "shell": {
+                    "executable": "C:/Program Files/Git/git-bash.exe",
+                    "args": [
+
+                    ]
+                }
+                */
+            },
+            "group": "build",
+            "detail": "使用make方式进行编译的任务，需要先写好makefile文件才可以使用此种方式"
+        },
+        {
+            "type": "shell",
+            "label": "make-xilinx cleanAll",
+            "command": "make",
+            "args": [
+                "subclean"
             ],
             "options": {
 				"cwd": "${fileDirname}",
