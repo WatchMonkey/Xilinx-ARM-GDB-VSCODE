@@ -109,7 +109,7 @@
                 "env": {
                     "CROSS_TOOL": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin", 
                     "MAKE_PATH": "X:/Xilinx-ToolChain/vivado2018.3/gnuwin/bin", 
-					"Path": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin;X:/Xilinx-ToolChain/vivado2018.3/gnuwin/bin;",
+					"Path": "X:/Xilinx-ToolChain/vivado2019.1/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin;X:/Xilinx-ToolChain/vivado2018.3/gnuwin/bin;",
 				},
                 /*
                 "shell": {

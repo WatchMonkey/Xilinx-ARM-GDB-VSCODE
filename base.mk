@@ -37,9 +37,21 @@ subinclude:
 # endif
 
 
-# subtarget
+# check target type and change name format
+temp_target := $(target)
+ifeq ($(type),share)
+target := $(foreach var,$(temp_target),lib$(var).so)
+else
+
+ifeq ($(type),static)
+target := $(foreach var,$(temp_target),lib$(var).a)
+endif
+
+endif
+# all object
 usr_objects = $(patsubst %.c,%.o,$(wildcard *.c))
 usr_objects += $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+# subtarget
 .PHONY: subtarget
 subtarget: $(target)
 $(target):$(usr_objects)

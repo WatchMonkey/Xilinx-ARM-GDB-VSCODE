@@ -11,4 +11,7 @@
         },
     },
     "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "files.associations": {
+        "cerrno": "cpp"
+    },
 }

@@ -12,19 +12,22 @@
 # user variable define
 #
 #工程目录的顶层makefile文件
-top_file = false
+top_file := false
 
 #工程目录编译生成目标的类型 binary static share
-type := binary
+type := share
 
 #工程目录下的子工程目录名称
-dep_prj_dir = libLog
+dep_prj_dir :=
 
 #当前编译工程的依赖库文件
-dep_lib = LogOp
+dep_lib :=
 
 #当前编译工程的目标文件,只能够有一个目标
-target := appDemo
+target := LogOp
+
+#当前编译工程的需要使用的编译工具的编译选项
+temp_FLAGS = -fpermissive
 
 
 

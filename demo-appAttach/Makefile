@@ -18,7 +18,7 @@ top_file = false
 type := binary
 
 #工程目录下的子工程目录名称
-dep_prj_dir = LogLib
+dep_prj_dir = libLog
 
 #当前编译工程的依赖库文件
 dep_lib = LogOp
