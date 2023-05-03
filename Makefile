@@ -18,7 +18,8 @@ top_file = true
 type :=
 
 #工程目录下的子工程目录
-dep_prj_dir = libLog libThread demo-appAttach demo-appDemo
+#dep_prj_dir = libLog demo-appAttach
+dep_prj_dir = libLog libThread demo-appAttach demo-appDemo demo-thread
 
 #当前编译工程的依赖库文件
 dep_lib =

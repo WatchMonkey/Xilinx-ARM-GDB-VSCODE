@@ -80,8 +80,6 @@ typedef struct thread_attr{
 }thread_attr,*thread_attr_ptr;
 
 
-
-
 /**
  * @brief create child thread use data from user input and bind an unique tag_id by user input
  * 
@@ -90,32 +88,20 @@ typedef struct thread_attr{
  * @param tag_id
  * @return status_t 
  */
-API status_t thread_ready(thread_func func,thread_param_ptr param,int tag_id);
+API status_t thread_ready_param(thread_func func,thread_param_ptr param,int tag_id);
 
 /**
- * @brief 
+ * @brief ready create thread attribution information data and bing an unique tag_id bu user input
  * 
  * @param func 
  * @param attr_ptr 
  * @param tag_id 
  * @return API 
  */
-API status_t thread_set_thread_attribute(thread_func func,pthread_attr_t* attr_ptr,int tag_id);
+API status_t thread_ready_attribute(thread_func func,pthread_attr_t* attr_ptr,int tag_id);
 
 /**
- * @brief 
- * 
- * @param func 
- * @param param 
- * @param tag_id 
- * @param sched_type 
- * @param priority_level 
- * @return API 
- */
-API status_t thread_ready_and_run(thread_func func,thread_param_ptr param,int tag_id,int sched_type,int priority_level);
-
-/**
- * @brief 
+ * @brief create child thread and start it
  * 
  * @param tag_id 
  * @return API 
@@ -123,29 +109,17 @@ API status_t thread_ready_and_run(thread_func func,thread_param_ptr param,int ta
 API status_t thread_create_and_start(int tag_id);
 
 /**
- * @brief 
+ * @brief ready crate thread reference parameter and attribution data,then create thread and start it
  * 
+ * @param func 
+ * @param param 
  * @param tag_id 
- * @param pause 
- * @return API 
+ * @param sched_type 
+ * @param priority_level 
+ * @return stats_t  0x0-success,other-failed
+ * @note this function used by support typical three scene 
  */
-API status_t thread_pause(int tag_id);
-
-/**
- * @brief 
- * 
- * @param tag_id 
- * @return API 
- */
-API status_t thread_resume(int tag_id);
-
-/**
- * @brief 
- * 
- * @param tag_id 
- * @return API 
- */
-API status_t thread_stop(int tag_id);
+API status_t thread_ready_and_start(thread_func func,thread_param_ptr param,int tag_id,int sched_type,int priority_level);
 
 /**
  * @brief 
@@ -155,20 +129,61 @@ API status_t thread_stop(int tag_id);
  */
 API status_t thread_release_and_destroy(int tag_id);
 
+
+
 /**
- * @brief 
+ * @brief pause thread running
+ * 
+ * @param tag_id 
+ * @param pause 
+ * @return API 
+ */
+API status_t thread_pause(int tag_id);
+
+/**
+ * @brief resume thread running
+ * 
+ * @param tag_id 
+ * @return API 
+ */
+API status_t thread_resume(int tag_id);
+
+/**
+ * @brief get current thread running status
  * 
  * @param tag_id 
  * @return API 
  */
 API thread_ctrl_id thread_current_status(int tag_id);
 
+
+
+
+
 /**
- * @brief 
+ * @brief check current environment support runtime shced policy
  * 
  * @return API 
  */
 API bool thread_check_runtime_support();
+
+/*!
+ * @brief check thread control data struct member stop value
+ * 
+ * @param tag_id 
+ * @return API 
+ */
+API bool thread_check_exit(int tag_id);
+API bool thread_check_exit();
+
+/*!
+ * @brief check thread control data struct member pause value
+ * 
+ * @param tag_id 
+ * @return API 
+ */
+API bool thread_check_pause(int tag_id);
+API bool thread_check_pause();
 
 
 // #ifdef __cplusplus

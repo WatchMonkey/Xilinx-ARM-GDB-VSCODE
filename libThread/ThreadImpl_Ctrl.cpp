@@ -1,5 +1,5 @@
 /*!
- * @file thread_internal.cpp
+ * @file ThreadImpl_Ctrl.cpp
  * @author your name (you@domain.com)
  * @brief 
  * @version 0.1
@@ -10,36 +10,49 @@
  */
 
 
-#include "thread_internal.h"
+#include "ThreadHeader.h"
+#include "mgr_header.h"
+#include "error_log.h"
 #include "LogHeader.h"
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
+#include <exception>
 
 
 
-status_t internal_thread_start(int identify)
+thread_ctrl_id thread_current_status(int identify)
+{
+    return s_thread_unknow;
+}
+
+
+status_t thread_pause(int identify)
 {
     if(NULL == get_ctrl_by_iden(identify)){
         ELog("can't get valid ctrl data order by identify:%d",identify);
         return RT_ERROR;
     }
     thread_control_ptr temp_ctrl = get_ctrl_by_iden(identify);
-    pthread_mutex_lock(&temp_ctrl->mutex_stop);
-    temp_ctrl->stop = false;
-    pthread_mutex_unlock(&temp_ctrl->mutex_stop);
+    pthread_mutex_lock(&temp_ctrl->mutex_pause);
+    temp_ctrl->pause = true;
+    pthread_mutex_unlock(&temp_ctrl->mutex_pause);
 
     return 0x0;
 }
 
 
-status_t internal_thread_stop(int identify)
+status_t thread_resume(int identify)
 {
     if(NULL == get_ctrl_by_iden(identify)){
         ELog("can't get valid ctrl data order by identify:%d",identify);
         return RT_ERROR;
     }
     thread_control_ptr temp_ctrl = get_ctrl_by_iden(identify);
-    pthread_mutex_lock(&temp_ctrl->mutex_stop);
-    temp_ctrl->stop = true;
-    pthread_mutex_unlock(&temp_ctrl->mutex_stop);
+    pthread_mutex_lock(&temp_ctrl->mutex_pause);
+    temp_ctrl->pause = false;
+    pthread_mutex_unlock(&temp_ctrl->mutex_pause);
 
     return 0x0;
 }
+

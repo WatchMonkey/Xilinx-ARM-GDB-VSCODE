@@ -9,7 +9,7 @@
 
 # define phony target
 .PHONY: all
-all: subinclude submake subtarget
+all: subinclude submakedir submake subtarget
 #ifneq "$(target)" ""
 #all: subinclude submake subtarget
 #else
@@ -37,6 +37,14 @@ subinclude:
 # endif
 
 
+MKDIR := mkdir
+TEMP_OBJ_DIR := .obj_user
+#submakedir
+.PHONY: submakedir
+submakedir:
+	$(MKDIR) -p ./$(TEMP_OBJ_DIR)
+
+
 # check target type and change name format
 temp_target := $(target)
 ifeq ($(type),share)
@@ -54,7 +62,7 @@ usr_objects += $(patsubst %.cpp,%.o,$(wildcard *.cpp))
 # subtarget
 .PHONY: subtarget
 subtarget: $(target)
-$(target):$(usr_objects)
+$(target):$(foreach var,$(usr_objects),$(TEMP_OBJ_DIR)/$(var))
 	$(CC) $(usr_LDFLAGS) $(usr_LD_LIB_PATH) -o $@ $^
 
 
@@ -85,7 +93,8 @@ endif
 .PHONY: clean
 clean:
 ifneq "$(target)" ""
-	-$(RM) *.d *.o $(target)
+	-$(RM) -r $(TEMP_OBJ_DIR)
+	-$(RM) *.d *.o $(target) $(TEMP_OBJ_DIR)
 endif
 
 
@@ -147,10 +156,10 @@ usr_LD_LIB_PATH = -L. $(foreach dir,$(dep_prj_dir),-L$(TOP_DIR)/$(dir))
 
 # Compiler Rules
 
-%.o: %.c
+$(TEMP_OBJ_DIR)/%.o: %.c
 	$(CC) $(DEBUG_LEVEL) $(usr_CFLAGS) $(usr_INCLUDE_PATH) -c -MD -MF $(patsubst %.o,%.d,$@) -o $@ $<
 
-%.o: %.cpp
+$(TEMP_OBJ_DIR)/%.o: %.cpp
 	$(CPP) $(DEBUG_LEVEL) $(usr_CPPFLAGS) $(usr_INCLUDE_PATH) -c -MD -MF $(patsubst %.o,%.d,$@) -o $@ $<
 
 # %.d: %.c
