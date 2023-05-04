@@ -17,14 +17,14 @@ top_file = false
 #工程目录编译生成目标的类型 binary static share
 type := binary
 
-#工程目录下的子工程目录
+#被当前工程所依赖的工程 的 工程目录下的目录名称
 dep_prj_dir = libLog libThread
 
 #当前编译工程的依赖库文件
-dep_lib = LogOp ThreadOp
+dep_lib = LogOp ThreadOp stdc++
 
 #当前编译工程的目标文件
-target := demo-Process
+target := demoProcess
 
 
 

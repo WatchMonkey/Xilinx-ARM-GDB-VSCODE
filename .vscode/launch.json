@@ -40,8 +40,71 @@
             "MIMode": "gdb",
             "miDebuggerPath": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb.exe",
             //"miDebuggerPath": "arm-linux-gnueabihf-gdb.exe",
-            "miDebuggerServerAddress": "192.168.1.233:2333",
+            "miDebuggerServerAddress": "192.168.1.233:24444",
             "miDebuggerArgs": "",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "将反汇编风格设置为 Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "(gdb) 启动demoThread",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/demo-thread/demoThread",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [
+                {"name": "PATH", "value": "$PATH;X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin;"},
+                //{"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/LogLib"},
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb.exe",
+            //"miDebuggerPath": "arm-linux-gnueabihf-gdb.exe",
+            "miDebuggerServerAddress": "192.168.1.233:24444",
+            "miDebuggerArgs": "-x ${workspaceFolder}/gdbcmd.cfg",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "将反汇编风格设置为 Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "(gdb) 启动demoProcess",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/demo-process/demoProcess",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [
+                {"name": "PATH", "value": "$PATH;X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin;"},
+                //{"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/LogLib"},
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb.exe",
+            //"miDebuggerPath": "arm-linux-gnueabihf-gdb.exe",
+            "miDebuggerServerAddress": "192.168.1.233:24444",
+            //"miDebuggerArgs": "-x ${workspaceFolder}/gdbcmd.cfg",
+            "additionalSOLibSearchPath": "${workspaceFolder}/libLog;${workspaceFolder}/libThread;${workspaceFolder}/demo-thread",
             "setupCommands": [
                 {
                     "description": "为 gdb 启用整齐打印",
@@ -78,7 +141,44 @@
             },
             //如果有被调试程序使用的库文件，需要在下面的属性中给出库文件的完整路径,如果不设置库的完整路径,那么
             //在库源码中设置的断点将不会进行触发.
-            "additionalSOLibSearchPath": "${workspaceFolder}/LogLib",
+            "additionalSOLibSearchPath": "${workspaceFolder}/libLog",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "将反汇编风格设置为 Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            //指定了要调试的目标程序,不需要选中要调试的程序的源码文件
+            "name": "(gdb) 附加,指定程序demo-thread",
+            "type": "cppdbg",
+            "request": "attach",
+            //需要调试的程序的完整路径
+            "program": "${workspaceFolder}/demo-thread/demoThread",
+            "MIMode": "gdb",
+            "miDebuggerPath": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb.exe",
+            //
+            "miDebuggerServerAddress": "192.168.1.233:23333",
+            //控制是否时调试远端设备的程序,如果设置为false那么绑定的是本地的进程.并且在设置miDebuggerServerAddress之后,必须要设置
+            //此属性为true,否则无法正常启动gdb调试
+            "useExtendedRemote": true,
+            //控制加载库文件符号信息的方式
+            "symbolLoadInfo": {
+                "loadAll": true,
+                "exceptionList": ""
+            },
+            "sourceFileMap":{
+            },
+            //如果有被调试程序使用的库文件，需要在下面的属性中给出库文件的完整路径,如果不设置库的完整路径,那么
+            //在库源码中设置的断点将不会进行触发.
+            "additionalSOLibSearchPath": "${workspaceFolder}/libLog;${workspaceFolder}/libThread",
             "setupCommands": [
                 {
                     "description": "为 gdb 启用整齐打印",
@@ -96,7 +196,7 @@
             "name": "(gdb) 启动,指定程序appDemo,不可以这样使用",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/appDemo",
+            "program": "${workspaceFolder}/demo-appDemo/appDemo",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

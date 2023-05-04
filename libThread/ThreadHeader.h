@@ -186,6 +186,16 @@ API bool thread_check_pause(int tag_id);
 API bool thread_check_pause();
 
 
+/*!
+ * @brief thread condition mutex variable
+ * 
+ * @param tid 
+ * @return API 
+ */
+API bool thread_cond_check(pthread_t tid);
+API void thread_cond_emit(pthread_t tid);
+
+
 // #ifdef __cplusplus
 // }
 // #endif

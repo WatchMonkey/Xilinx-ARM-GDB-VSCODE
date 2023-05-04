@@ -12,20 +12,19 @@
 # user variable define
 #
 #工程目录的顶层makefile文件
-top_file = true
+top_file = false
 
 #工程目录编译生成目标的类型 binary static share
-type :=
+type := binary
 
 #工程目录下的子工程目录
-#dep_prj_dir = libLog demo-appAttach
-dep_prj_dir = libLog libThread demo-appAttach demo-appDemo demo-thread prj-MDKServer demo-process
+dep_prj_dir =
 
 #当前编译工程的依赖库文件
-dep_lib =
+dep_lib = 
 
 #当前编译工程的目标文件
-target :=
+target := MDKServer
 
 
 

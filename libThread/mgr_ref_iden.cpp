@@ -23,6 +23,7 @@ status_t init_index_by_iden(int identify)
         return RT_ERROR;
     }
     //
+    pthread_attr_destroy(&(get_attr(temp_index)->attr));
     init_index(temp_index);
     return 0x0;
 }

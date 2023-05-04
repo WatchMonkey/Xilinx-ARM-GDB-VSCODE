@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <unistd.h>
 #include "LogHeader.h"
 #include "ThreadHeader.h"
 #include <string.h>
@@ -75,26 +76,32 @@ static int local_loop(void* param)
 
 static void* work_thread(void* param)
 {
-    DLog("already start child thread");
-    int temp_rt = 0x0;
+    ILog("already execute child thread");
+    DLog("already execute child thread");
 	thread_param_ptr thread_param = (thread_param_ptr)param;
 	thread_param->thread_id = pthread_self();
+    thread_param->thread_pid = getpid();
 	int* temp_exit_code = &thread_param->exit_code;
+    //TODO:这里需要进行一些处理，使用其他更好的方式解决tid无法及时别写入到mgr_array中的问题
+    usleep(1000000);
+    //TODO:条件机制的使用，还未完成
+    //while(false == thread_cond_check(pthread_self()));
 	//
+	status_t temp_rt = 0x0;
 	try{
 		//work
 		temp_rt = local_loop(param);
 		if((temp_rt & 0x0000FFFF)){
-			ELog("Work Thread[%s],PID=%08x running error",thread_param->thread_name,thread_param->thread_id);
+			ELog("Work Thread[%s],TID=%08x running error",thread_param->thread_name,thread_param->thread_id);
 		}else{
-			ILog("Work Thread[%s],PID=%08x success finished",thread_param->thread_name,thread_param->thread_id);
+			ILog("Work Thread[%s],TID=%08x success finished",thread_param->thread_name,thread_param->thread_id);
 		}
 	}catch(const char* exp){
-		ELog("Work Thread[%s],PID=%08x running happened exception,%s",thread_param->thread_name,thread_param->thread_id,exp);
+		ELog("Work Thread[%s],TID=%08x running happened exception,%s",thread_param->thread_name,thread_param->thread_id,exp);
 		*temp_exit_code = RT_ERROR;
 		return temp_exit_code;
 	}catch(...){
-		ELog("Work Thread[%s],PID=%08x running happened exception",thread_param->thread_name,thread_param->thread_id);
+		ELog("Work Thread[%s],TID=%08x running happened exception",thread_param->thread_name,thread_param->thread_id);
 		*temp_exit_code = RT_ERROR;
 		return temp_exit_code;
 	}
@@ -120,7 +127,7 @@ int main()
     //
     int temp_rt = 0x0;
 	//initialize log
-	temp_rt = InitializeLog("appDemo");
+	temp_rt = InitializeLog("demoThread");
 	if(temp_rt){
 		fprintf(stderr,"Log Module initialize failed\n");
 		return RT_ERROR;
@@ -178,14 +185,15 @@ int main()
 	int temp_pause = 0x0;
 	int temp_stop = 0x0;
 	int loop_status = 0x0;
+	int temp_cnt = 0x0;
 	while(1)
 	{
 		if(temp_stop){
 			loop_status = thread_release_and_destroy(tag_id);
 			if(loop_status){
 				ELog("function execute failed:%d",loop_status);
-				break;
-			}	
+			}
+			break;	
 		}
 		//
 		if(0x1 == temp_pause){
@@ -201,6 +209,8 @@ int main()
 				break;
 			}	
 		}
+		//
+		DTLog(500,"main function:%d",++temp_cnt);
 	}
 
 

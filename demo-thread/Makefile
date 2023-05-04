@@ -24,7 +24,7 @@ dep_prj_dir = libLog libThread
 dep_lib = LogOp ThreadOp stdc++
 
 #当前编译工程的目标文件
-target := demo-Thread
+target := demoThread
 
 
 

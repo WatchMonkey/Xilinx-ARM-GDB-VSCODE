@@ -26,7 +26,9 @@ bool check_unique(int tag_id)
         }
         cnt++;
     }
-    return !cnt;
+    if(0x1 >= cnt)
+        return true;
+    return false;
 }
 
 

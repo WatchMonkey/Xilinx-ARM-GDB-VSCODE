@@ -22,6 +22,7 @@
 #include <exception>
 
 
+
 /*!
  * @brief default child thrad main function
  * 
@@ -30,14 +31,20 @@
  */
 static void* work_thread(void* param)
 {
+    ILog("already execute child thread");
+    DLog("already execute child thread");
 	thread_param_ptr thread_param = (thread_param_ptr)param;
 	thread_param->thread_id = pthread_self();
     thread_param->thread_pid = getpid();
 	int* temp_exit_code = &thread_param->exit_code;
+    //TODO:这里需要进行一些处理，使用其他更好的方式解决tid无法及时别写入到mgr_array中的问题
+    usleep(1000000);
+    //TODO:条件机制的使用，还未完成
+    //while(false == thread_cond_check(pthread_self()));
 	//
     status_t temp_rt = 0x0;
     if(NULL == thread_param->userfunc_ptr){
-        ELog("Work Thread[%s],PID=%08x user func point was invalid,exit child thread",thread_param->thread_name,thread_param->thread_id);
+        ELog("Work Thread[%s],TID=%08x user func point was invalid,exit child thread",thread_param->thread_name,thread_param->thread_id);
         *temp_exit_code = RT_ERROR;
 		return temp_exit_code;
     }
@@ -45,16 +52,16 @@ static void* work_thread(void* param)
 		//work
 		temp_rt = thread_param->userfunc_ptr(param);
 		if((temp_rt & 0x0000FFFF)){
-			ELog("Work Thread[%s],PID=%08x running error",thread_param->thread_name,thread_param->thread_id);
+			ELog("Work Thread[%s],TID=%08x running error",thread_param->thread_name,thread_param->thread_id);
 		}else{
-			ILog("Work Thread[%s],PID=%08x success finished",thread_param->thread_name,thread_param->thread_id);
+			ILog("Work Thread[%s],TID=%08x success finished",thread_param->thread_name,thread_param->thread_id);
 		}
 	}catch(const char* exp){
-		ELog("Work Thread[%s],PID=%08x running happened exception,%s",thread_param->thread_name,thread_param->thread_id,exp);
+		ELog("Work Thread[%s],TID=%08x running happened exception,%s",thread_param->thread_name,thread_param->thread_id,exp);
 		*temp_exit_code = RT_ERROR;
 		return temp_exit_code;
 	}catch(...){
-		ELog("Work Thread[%s],PID=%08x running happened exception",thread_param->thread_name,thread_param->thread_id);
+		ELog("Work Thread[%s],TID=%08x running happened exception",thread_param->thread_name,thread_param->thread_id);
 		*temp_exit_code = RT_ERROR;
 		return temp_exit_code;
 	}
@@ -62,7 +69,67 @@ static void* work_thread(void* param)
 	*temp_exit_code = temp_rt;
 	return temp_exit_code;
 }
-
+#ifdef EXMAPLE_CODE
+/*!
+ * @brief user work code function
+ * 
+ * @param param 
+ * @return int 
+ */
+static int local_loop(void* param)
+{
+    thread_param_ptr thread_param = (thread_param_ptr)param;
+    if(NULL == thread_param){
+        ELog("threac control parameter invalid");
+        return RT_ERROR;
+    }
+    while(1){
+        //user work logic code
+    }
+    return 0x0;
+}
+/*!
+ * @brief 用户模板线程入口函数的写法,直接copy，然后修改local_loop函数的逻辑
+ * 
+ * @param param 
+ * @return void* 
+ */
+static void* exmaple_thread_main_func(void* param)
+{
+    ILog("already execute child thread");
+    DLog("already execute child thread");
+	thread_param_ptr thread_param = (thread_param_ptr)param;
+	thread_param->thread_id = pthread_self();
+    thread_param->thread_pid = getpid();
+	int* temp_exit_code = &thread_param->exit_code;
+    //TODO:这里需要进行一些处理，使用其他更好的方式解决tid无法及时别写入到mgr_array中的问题
+    usleep(1000000);
+    //TODO:条件机制的使用，还未完成
+    //while(false == thread_cond_check(pthread_self()));
+	//
+	status_t temp_rt = 0x0;
+	try{
+		//work
+		temp_rt = local_loop(param);
+		if((temp_rt & 0x0000FFFF)){
+			ELog("Work Thread[%s],TID=%08x running error",thread_param->thread_name,thread_param->thread_id);
+		}else{
+			ILog("Work Thread[%s],TID=%08x success finished",thread_param->thread_name,thread_param->thread_id);
+		}
+	}catch(const char* exp){
+		ELog("Work Thread[%s],TID=%08x running happened exception,%s",thread_param->thread_name,thread_param->thread_id,exp);
+		*temp_exit_code = RT_ERROR;
+		return temp_exit_code;
+	}catch(...){
+		ELog("Work Thread[%s],TID=%08x running happened exception",thread_param->thread_name,thread_param->thread_id);
+		*temp_exit_code = RT_ERROR;
+		return temp_exit_code;
+	}
+	//exit
+	*temp_exit_code = temp_rt;
+	return temp_exit_code;
+}
+#endif
 
 
 status_t thread_ready_param(thread_func func,thread_param_ptr param,int identify)
@@ -170,7 +237,7 @@ status_t thread_ready_and_start(thread_func func,thread_param_ptr param,int iden
 
 status_t thread_create_and_start(int identify)
 {
-    if(NULL == get_attr(identify) || NULL == get_param(identify)){
+    if(NULL == get_attr_by_iden(identify) || NULL == get_param_by_iden(identify)){
         ELog("can't get valid attr data or param data order by identify:%d",identify);
         return RT_ERROR;
     }
@@ -183,17 +250,17 @@ status_t thread_create_and_start(int identify)
     }
     //
     pthread_t temp_tid;
-    thread_param_ptr temp_param = get_param(identify);
+    thread_param_ptr temp_param = get_param_by_iden(identify);
     //set control data point
-    temp_param->remain_ptr = get_ctrl(identify);
-    if(NULL == get_func(identify))
+    temp_param->remain_ptr = get_ctrl_by_iden(identify);
+    if(NULL == get_func_by_iden(identify))
     {
-        if(pthread_create(&temp_tid,&(get_attr(identify)->attr),work_thread,temp_param)){
+        if(pthread_create(&temp_tid,&(get_attr_by_iden(identify)->attr),work_thread,temp_param)){
             ELog("create thread failed order by identify:%d",identify);
             return RT_ERROR;
         }
     }else{
-        if(pthread_create(&temp_tid,&(get_attr(identify)->attr),get_func(identify),temp_param)){
+        if(pthread_create(&temp_tid,&(get_attr_by_iden(identify)->attr),get_func_by_iden(identify),temp_param)){
             ELog("create thread failed order by identify:%d",identify);
             return RT_ERROR;
         }
@@ -202,6 +269,8 @@ status_t thread_create_and_start(int identify)
         ELog("save thread id reference identify");
         return RT_ERROR;
     }
+    //TODO:条件机制的使用，还未完成
+    //thread_cond_emit(identify);
     //
     if(thread_resume(identify)){
         return RT_ERROR;
@@ -220,7 +289,7 @@ status_t thread_release_and_destroy(int identify)
         return RT_ERROR;
     }
     //
-    thread_param_ptr temp_param = get_param(identify);
+    thread_param_ptr temp_param = get_param_by_iden(identify);
     if(NULL == temp_param){
         ELog("get thread parameter data from mgr was invalid");
         return RT_ERROR;
@@ -231,8 +300,8 @@ status_t thread_release_and_destroy(int identify)
         ELog("thread join function occur error,%d:%s",errno,strerror(errno));
         return RT_ERROR;
     }
-    DLog("child thread:%d.[%s] exit success,return value:%d",temp_tid,temp_param->thread_name,*(int*)temp_value);
-    ILog("child thread:%d.[%s] exit success,return value:%d",temp_tid,temp_param->thread_name,*(int*)temp_value);
+    DLog("child thread:%x.[%s] exit success,return value:%d",temp_tid,temp_param->thread_name,*(int*)temp_value);
+    ILog("child thread:%x.[%s] exit success,return value:%d",temp_tid,temp_param->thread_name,*(int*)temp_value);
     //
     init_index_by_iden(identify);
     ILog("identify:%d destroy success",identify);
