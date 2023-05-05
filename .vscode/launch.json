@@ -9,7 +9,7 @@
             "program": "${workspaceFolder}/${fileBasenameNoExtension}",
             "MIMode": "gdb",
             "miDebuggerPath": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb.exe",
-            "miDebuggerServerAddress": "192.168.1.233:2333",
+            "miDebuggerServerAddress": "192.168.1.233:23333",
             "useExtendedRemote": true,
             "setupCommands": [
                 {
@@ -56,23 +56,38 @@
             ]
         },
         {
+            //名称以及简短描述，指定了要调试的目标程序,不需要选中要调试的程序的源码文件
             "name": "(gdb) 启动demoThread",
+            //类型，GDB调试只能选此类型
             "type": "cppdbg",
+            //调试方式，launch直接启动的方式调试
             "request": "launch",
+            //需要调试的程序的完整路径
             "program": "${workspaceFolder}/demo-thread/demoThread",
+            //传递给被调试程序的输入参数
             "args": [],
+            //调试程序是否停止在程序入口
             "stopAtEntry": false,
+            //被调试程序的工作目录（运行目录的意思吧）
             "cwd": "${fileDirname}",
+            //环境变量设置（感觉没效果，不知如何起作用）
             "environment": [
                 {"name": "PATH", "value": "$PATH;X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin;"},
                 //{"name": "LD_LIBRARY_PATH", "value": "${workspaceFolder}/LogLib"},
             ],
+            //是否使用外部窗口
             "externalConsole": false,
+            //需要连接的调试器
             "MIMode": "gdb",
+            //需要连接的调试器的程序路径，这里必须要加上.exe的后缀，因为这里是直接启动的xxxxx-gdb.exe这个程序，不是通过shell方式来执行命令。
+            //所以这里是需要给出程序的完整路径
             "miDebuggerPath": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb.exe",
             //"miDebuggerPath": "arm-linux-gnueabihf-gdb.exe",
+            //远端gdbserver的地址与端口
             "miDebuggerServerAddress": "192.168.1.233:24444",
+            //xxx-gdb.exe启动时的参数,此参数是给gdb的，不是给被调试程序的
             "miDebuggerArgs": "-x ${workspaceFolder}/gdbcmd.cfg",
+            //设置信息
             "setupCommands": [
                 {
                     "description": "为 gdb 启用整齐打印",
@@ -128,7 +143,7 @@
             "MIMode": "gdb",
             "miDebuggerPath": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb.exe",
             //
-            "miDebuggerServerAddress": "192.168.1.233:2333",
+            "miDebuggerServerAddress": "192.168.1.233:23333",
             //控制是否时调试远端设备的程序,如果设置为false那么绑定的是本地的进程.并且在设置miDebuggerServerAddress之后,必须要设置
             //此属性为true,否则无法正常启动gdb调试
             "useExtendedRemote": true,
@@ -156,15 +171,20 @@
             ]
         },
         {
-            //指定了要调试的目标程序,不需要选中要调试的程序的源码文件
+            //名称以及简短描述，指定了要调试的目标程序,不需要选中要调试的程序的源码文件
             "name": "(gdb) 附加,指定程序demo-thread",
+            //类型，GDB调试只能选此类型
             "type": "cppdbg",
+            //调试方式，attach附加方式
             "request": "attach",
             //需要调试的程序的完整路径
             "program": "${workspaceFolder}/demo-thread/demoThread",
+            //需要连接的调试器
             "MIMode": "gdb",
+            //需要连接的调试器的程序路径，这里必须要加上.exe的后缀，因为这里是直接启动的xxxxx-gdb.exe这个程序，不是通过shell方式来执行命令。
+            //所以这里是需要给出程序的完整路径
             "miDebuggerPath": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb.exe",
-            //
+            //远端gdbserver的地址与端口
             "miDebuggerServerAddress": "192.168.1.233:23333",
             //控制是否时调试远端设备的程序,如果设置为false那么绑定的是本地的进程.并且在设置miDebuggerServerAddress之后,必须要设置
             //此属性为true,否则无法正常启动gdb调试
@@ -174,11 +194,13 @@
                 "loadAll": true,
                 "exceptionList": ""
             },
+            //源文件路径映射，暂不清楚使用效果以及方式
             "sourceFileMap":{
             },
             //如果有被调试程序使用的库文件，需要在下面的属性中给出库文件的完整路径,如果不设置库的完整路径,那么
-            //在库源码中设置的断点将不会进行触发.
+            //在库源码中设置的断点将不会进行触发.并且与无法加载库文件的调试信息
             "additionalSOLibSearchPath": "${workspaceFolder}/libLog;${workspaceFolder}/libThread",
+            //设置信息
             "setupCommands": [
                 {
                     "description": "为 gdb 启用整齐打印",
@@ -193,7 +215,7 @@
             ]
         },
         {
-            "name": "(gdb) 启动,指定程序appDemo,不可以这样使用",
+            "name": "(gdb) 启动,指定程序appDemo",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/demo-appDemo/appDemo",
@@ -208,7 +230,7 @@
             "MIMode": "gdb",
             "miDebuggerPath": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb.exe",
             //"miDebuggerPath": "arm-linux-gnueabihf-gdb.exe",
-            "miDebuggerServerAddress": "192.168.1.233:2333",
+            "miDebuggerServerAddress": "192.168.1.233:24444",
             "miDebuggerArgs": "",
             "setupCommands": [
                 {
@@ -238,7 +260,7 @@
             "MIMode": "gdb",
             "miDebuggerPath": "X:/Xilinx-ToolChain/vivado2018.3/gnu/aarch32/nt/gcc-arm-linux-gnueabi/bin/arm-linux-gnueabihf-gdb.exe",
             //"miDebuggerPath": "arm-linux-gnueabihf-gdb.exe",
-            "miDebuggerServerAddress": "192.168.1.233:2333",
+            "miDebuggerServerAddress": "192.168.1.233:23333",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
